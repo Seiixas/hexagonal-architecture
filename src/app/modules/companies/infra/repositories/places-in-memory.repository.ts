@@ -1,14 +1,10 @@
-import { Company } from "!domain/companies/company";
-import { CreatePlaceDTO } from "!domain/places/dtos/create-place.dto";
 import { Place } from "!domain/places/place";
 import { PlacesRepository } from "!domain/places/places.repository";
 
 export class PlacesRepositoryInMemory implements PlacesRepository {
   private places: Place[] = [];
 
-  async store(data: CreatePlaceDTO): Promise<Place> {
-    const place = new Place(data);
-
+  async store(place: Place): Promise<Place> {
     this.places.push(place);
 
     return place;
@@ -44,6 +40,6 @@ export class PlacesRepositoryInMemory implements PlacesRepository {
   }
 
   async allByCompanyId(companyId: string): Promise<Place[]> {
-    return await this.places.filter((place) => place.company.id === companyId);
+    return this.places.filter((place) => place.company.id === companyId);
   }
 }

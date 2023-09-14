@@ -5,9 +5,7 @@ import { CreateCompanyDTO } from "!domain/companies/dtos/create-update.dto";
 export class CompaniesRepositoryInMemory implements CompaniesRepository {
   private companies: Company[] = [];
 
-  async store(data: CreateCompanyDTO): Promise<Company> {
-    const company = new Company(data);
-
+  async store(company: Company): Promise<Company> {
     this.companies.push(company);
 
     return company;

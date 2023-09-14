@@ -41,11 +41,13 @@ export class CreateCompanyService {
 
     if (companyAlreadyExists) throw new CNPJUnavailableException();
 
-    return await this.companiesRepository.store({
+    const company = new Company({
       name,
       website,
       cnpj,
       user,
     });
+
+    return await this.companiesRepository.store(company);
   }
 }

@@ -17,13 +17,7 @@ export class UsersRepositoryInMemory implements UsersRepository {
     this.users.splice(userPosition, 1);
   }
 
-  async store({ password, name, email }: CreateUserDTO): Promise<User> {
-    const user = new User({
-      password,
-      name,
-      email,
-    });
-
+  async store(user: User): Promise<User> {
     this.users.push(user);
 
     return user;

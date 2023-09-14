@@ -1,7 +1,12 @@
-import { CreateUserDTO } from "!domain/users/dtos/create-user-dto";
 import { User } from "!domain/users/user";
 import { UsersRepository } from "!domain/users/users.repository";
 import { EmailUnavailableException } from "!modules/users/errors/email-unavailable.exception";
+
+interface CreateUserDTO {
+  name: string;
+  email: string;
+  password: string;
+}
 
 export class CreateUserService {
   constructor(private readonly usersRepository: UsersRepository) {}
@@ -17,10 +22,12 @@ export class CreateUserService {
 
     if (userAlreadyExists) throw new EmailUnavailableException();
 
-    return await this.usersRepository.store({
+    const user = new User({
       name,
       email,
       password,
     });
+
+    return await this.usersRepository.store(user);
   }
 }

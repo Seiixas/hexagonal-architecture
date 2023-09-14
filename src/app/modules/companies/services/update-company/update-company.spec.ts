@@ -5,6 +5,7 @@ import { User } from "!domain/users/user";
 import { InvalidFieldFormatException } from "!modules/companies/errors/invalid-field-format.exception";
 import { CNPJUnavailableException } from "!modules/companies/errors/cnpj-unavailable.exception";
 import { CompanyNotFoundException } from "!modules/companies/errors/company-not-found.exception";
+import { Company } from "!domain/companies/company";
 
 let updateCompanyService: UpdateCompanyService;
 let companiesRepository: CompaniesRepository;
@@ -16,16 +17,18 @@ describe("Update Company Use Case", () => {
   });
 
   it("should be able to update a company", async () => {
-    const company = await companiesRepository.store({
-      name: "MyCompany",
-      website: "http://my.company.com",
-      cnpj: "80.562.961/0001-29",
-      user: new User({
-        name: "John Doe",
-        email: "john@doe.com",
-        password: "my-secret-password",
-      }),
-    });
+    const company = await companiesRepository.store(
+      new Company({
+        name: "MyCompany",
+        website: "http://my.company.com",
+        cnpj: "80.562.961/0001-29",
+        user: new User({
+          name: "John Doe",
+          email: "john@doe.com",
+          password: "my-secret-password",
+        }),
+      })
+    );
 
     await updateCompanyService.execute({
       id: company.id,
@@ -81,27 +84,31 @@ describe("Update Company Use Case", () => {
 
   it("should not be able to update a company with an used CNPJ", () => {
     expect(async () => {
-      const company = await companiesRepository.store({
-        name: "MyCompany",
-        website: "http://my.company.com",
-        cnpj: "80.562.961/0001-29",
-        user: new User({
-          name: "John Doe",
-          email: "john@doe.com",
-          password: "my-secret-password",
-        }),
-      });
+      const company = await companiesRepository.store(
+        new Company({
+          name: "MyCompany",
+          website: "http://my.company.com",
+          cnpj: "80.562.961/0001-29",
+          user: new User({
+            name: "John Doe",
+            email: "john@doe.com",
+            password: "my-secret-password",
+          }),
+        })
+      );
 
-      await companiesRepository.store({
-        name: "OtherCompany",
-        website: "other.company.com",
-        cnpj: "70.562.961/0001-29",
-        user: new User({
-          name: "Mary Doe",
-          email: "mary@doe.com",
-          password: "my-secret-password",
-        }),
-      });
+      await companiesRepository.store(
+        new Company({
+          name: "OtherCompany",
+          website: "other.company.com",
+          cnpj: "70.562.961/0001-29",
+          user: new User({
+            name: "Mary Doe",
+            email: "mary@doe.com",
+            password: "my-secret-password",
+          }),
+        })
+      );
 
       await updateCompanyService.execute({
         id: company.id,

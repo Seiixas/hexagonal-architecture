@@ -1,12 +1,16 @@
-import { randomUUID } from 'crypto';
+import { randomUUID } from "crypto";
+
+interface ConstructorProps {
+  id: string;
+}
 
 export class BaseEntity {
   protected _id: string;
   protected _createdAt: Date;
   protected _updatedAt: Date;
 
-  constructor() {
-    this._id = randomUUID();
+  constructor(props?: ConstructorProps) {
+    this._id = props ? props.id : randomUUID();
     this._createdAt = new Date();
     this._updatedAt = new Date();
   }

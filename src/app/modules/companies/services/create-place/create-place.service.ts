@@ -36,7 +36,7 @@ export class CreatePlaceService {
 
     if (!company) throw new CompanyNotFoundException();
 
-    return await this.placesRepository.store({
+    const place = new Place({
       name,
       cep,
       street,
@@ -46,5 +46,7 @@ export class CreatePlaceService {
       state,
       company,
     });
+
+    return await this.placesRepository.store(place);
   }
 }

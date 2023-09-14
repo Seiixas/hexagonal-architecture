@@ -2,6 +2,7 @@ import { UsersRepositoryInMemory } from "!modules/users/infra/repositories/users
 import { UsersRepository } from "!domain/users/users.repository";
 import { DeleteUserService } from "./delete-user.service";
 import { UserNotFoundException } from "!modules/users/errors/user-not-found.exception";
+import { User } from "!domain/users/user";
 
 let deleteUserService: DeleteUserService;
 let usersRepository: UsersRepository;
@@ -13,11 +14,13 @@ describe("Delete User Use Case", () => {
   });
 
   it("should be able to delete an user", async () => {
-    const user = await usersRepository.store({
-      name: "John Doe",
-      email: "john@doe.com",
-      password: "my-secret-password",
-    });
+    const user = await usersRepository.store(
+      new User({
+        name: "John Doe",
+        email: "john@doe.com",
+        password: "my-secret-password",
+      })
+    );
 
     await deleteUserService.execute(user.id);
 

@@ -3,6 +3,7 @@ import { UsersRepository } from "!domain/users/users.repository";
 import { UpdateUserService } from "./update-user.service";
 import { EmailUnavailableException } from "!modules/users/errors/email-unavailable.exception";
 import { UserNotFoundException } from "!modules/users/errors/user-not-found.exception";
+import { User } from "!domain/users/user";
 
 let updateUserService: UpdateUserService;
 let usersRepository: UsersRepository;
@@ -14,11 +15,13 @@ describe("Update User Use Case", () => {
   });
 
   it("should be able to update an user", async () => {
-    const user = await usersRepository.store({
-      name: "John Doe",
-      email: "john@doe.com",
-      password: "my-secret-password",
-    });
+    const user = await usersRepository.store(
+      new User({
+        name: "John Doe",
+        email: "john@doe.com",
+        password: "my-secret-password",
+      })
+    );
 
     await updateUserService.execute(user.id, { name: "Mary Doe" });
 
@@ -31,17 +34,21 @@ describe("Update User Use Case", () => {
 
   it("should not be able to update an user with an used email", () => {
     expect(async () => {
-      await usersRepository.store({
-        name: "John Doe",
-        email: "john@doe.com",
-        password: "my-secret-password",
-      });
+      await usersRepository.store(
+        new User({
+          name: "John Doe",
+          email: "john@doe.com",
+          password: "my-secret-password",
+        })
+      );
 
-      const user = await usersRepository.store({
-        name: "Mary Doe",
-        email: "mary@doe.com",
-        password: "my-secret-password",
-      });
+      const user = await usersRepository.store(
+        new User({
+          name: "Mary Doe",
+          email: "mary@doe.com",
+          password: "my-secret-password",
+        })
+      );
 
       await updateUserService.execute(user.id, { email: "john@doe.com" });
     }).rejects.toBeInstanceOf(EmailUnavailableException);
