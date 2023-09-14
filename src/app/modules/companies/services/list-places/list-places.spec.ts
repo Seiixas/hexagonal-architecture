@@ -74,9 +74,4 @@ describe("List Places Use Case", () => {
 
     expect(places).toHaveLength(2);
   });
-
-  it("should be able to list places from company", async () => {
-    // const places = await listPlacesService.execute(company.id);
-    // expect(places).toHaveLength(1);
-  });
 });

@@ -1,9 +1,8 @@
-import { CreatePlaceDTO } from "!domain/places/dtos/create-place.dto";
+import { Place } from "!domain/places/place";
 import { PlacesRepository } from "!domain/places/places.repository";
 import { PlaceNotFoundException } from "!modules/companies/errors/place-not-found.exception";
 
-interface UpdatePlaceUseCaseDTO
-  extends Omit<Partial<CreatePlaceDTO>, "company"> {
+interface UpdatePlaceUseCaseDTO extends Omit<Partial<Place>, "company"> {
   id: string;
 }
 

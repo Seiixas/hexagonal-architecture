@@ -23,7 +23,7 @@ describe("Update User Use Case", () => {
       })
     );
 
-    await updateUserService.execute(user.id, { name: "Mary Doe" });
+    await updateUserService.execute({ id: user.id, name: "Mary Doe" });
 
     const userUpdated = await usersRepository.find({
       where: { id: user.id },
@@ -50,13 +50,16 @@ describe("Update User Use Case", () => {
         })
       );
 
-      await updateUserService.execute(user.id, { email: "john@doe.com" });
+      await updateUserService.execute({ id: user.id, email: "john@doe.com" });
     }).rejects.toBeInstanceOf(EmailUnavailableException);
   });
 
   it("should not be able to update an user that does not exists", () => {
     expect(async () => {
-      await updateUserService.execute("fake-user-id", { name: "fake-name" });
+      await updateUserService.execute({
+        id: "fake-user-id",
+        name: "fake-name",
+      });
     }).rejects.toBeInstanceOf(UserNotFoundException);
   });
 });

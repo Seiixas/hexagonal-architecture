@@ -10,20 +10,21 @@ export class PlacesRepositoryInMemory implements PlacesRepository {
     return place;
   }
 
-  async find({ where }: { where: Partial<Place> }): Promise<Place> {
-    const foundPlace = this.places.find((places) => {
+  async find({ where }: { where: Partial<Place> }): Promise<Place | null> {
+    const foundPlace = this.places.find((place) => {
       return (
-        (where.name === undefined || places.name === where.name) &&
-          (where.cep === undefined || places.cep === where.cep) &&
-          (where.city === undefined || places.city === where.city) &&
-          (where.company === undefined || places.company === where.company),
-        where.createdAt === undefined || places.createdAt === where.createdAt,
-        where.district === undefined || places.district === where.district,
-        where.id === undefined || places.id === where.id,
-        where.number === undefined || places.number === where.number,
-        where.state === undefined || places.state === where.state,
-        where.street === undefined || places.street === where.street,
-        where.updatedAt === undefined || places.updatedAt === where.updatedAt
+        (where.name === undefined || place.name === where.name) &&
+        (where.cep === undefined || place.cep === where.cep) &&
+        (where.city === undefined || place.city === where.city) &&
+        (where.company === undefined || place.company === where.company) &&
+        (where.createdAt === undefined ||
+          place.createdAt === where.createdAt) &&
+        (where.district === undefined || place.district === where.district) &&
+        (where.id === undefined || place.id === where.id) &&
+        (where.number === undefined || place.number === where.number) &&
+        (where.state === undefined || place.state === where.state) &&
+        (where.street === undefined || place.street === where.street) &&
+        (where.updatedAt === undefined || place.updatedAt === where.updatedAt)
       );
     });
 

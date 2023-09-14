@@ -1,4 +1,3 @@
-import { CreateUserDTO } from "!domain/users/dtos/create-user-dto";
 import { User } from "!domain/users/user";
 import { UsersRepository } from "!domain/users/users.repository";
 

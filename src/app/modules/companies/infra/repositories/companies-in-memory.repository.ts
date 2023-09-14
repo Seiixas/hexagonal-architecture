@@ -1,6 +1,5 @@
 import { CompaniesRepository } from "!domain/companies/companies.repository";
 import { Company } from "!domain/companies/company";
-import { CreateCompanyDTO } from "!domain/companies/dtos/create-update.dto";
 
 export class CompaniesRepositoryInMemory implements CompaniesRepository {
   private companies: Company[] = [];

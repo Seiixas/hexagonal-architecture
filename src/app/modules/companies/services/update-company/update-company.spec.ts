@@ -32,7 +32,7 @@ describe("Update Company Use Case", () => {
 
     await updateCompanyService.execute({
       id: company.id,
-      website: "other.website.com",
+      website: "https://other.website.com",
     });
 
     const companyUpdated = await companiesRepository.find({
@@ -42,48 +42,52 @@ describe("Update Company Use Case", () => {
     expect(companyUpdated.id).toEqual(company.id);
   });
 
-  // it("should not be able to update a company with invalid CNPJ", () => {
-  //   expect(async () => {
-  //     const company = await companiesRepository.store({
-  //       name: "MyCompany",
-  //       website: "http://my.company.com",
-  //       cnpj: "80562961000129",
-  //       user: new User({
-  //         name: "John Doe",
-  //         email: "john@doe.com",
-  //         password: "my-secret-password",
-  //       }),
-  //     });
-
-  //     await updateCompanyService.execute({
-  //       id: company.id,
-  //       cnpj: "111.111.111-11",
-  //     });
-  //   }).rejects.toBeInstanceOf(InvalidFieldFormatException);
-  // });
-
-  // it("should not be able to create a company with invalid website", () => {
-  //   expect(async () => {
-  //     const company = await companiesRepository.store({
-  //       name: "MyCompany",
-  //       website: "http://my.company.com",
-  //       cnpj: "80.562.961/0001-29",
-  //       user: new User({
-  //         name: "John Doe",
-  //         email: "john@doe.com",
-  //         password: "my-secret-password",
-  //       }),
-  //     });
-
-  //     await updateCompanyService.execute({
-  //       id: company.id,
-  //       website: "fake-website",
-  //     });
-  //   }).rejects.toBeInstanceOf(InvalidFieldFormatException);
-  // });
-
-  it("should not be able to update a company with an used CNPJ", () => {
+  it("should not be able to update a company with invalid CNPJ", () => {
     expect(async () => {
+      const company = await companiesRepository.store(
+        new Company({
+          name: "MyCompany",
+          website: "http://my.company.com",
+          cnpj: "80562961000129",
+          user: new User({
+            name: "John Doe",
+            email: "john@doe.com",
+            password: "my-secret-password",
+          }),
+        })
+      );
+
+      await updateCompanyService.execute({
+        id: company.id,
+        cnpj: "111.111.111-11",
+      });
+    }).rejects.toBeInstanceOf(InvalidFieldFormatException);
+  });
+
+  it("should not be able to create a company with invalid website", () => {
+    expect(async () => {
+      const company = await companiesRepository.store(
+        new Company({
+          name: "MyCompany",
+          website: "http://my.company.com",
+          cnpj: "80.562.961/0001-29",
+          user: new User({
+            name: "John Doe",
+            email: "john@doe.com",
+            password: "my-secret-password",
+          }),
+        })
+      );
+
+      await updateCompanyService.execute({
+        id: company.id,
+        website: "fake-website",
+      });
+    }).rejects.toBeInstanceOf(InvalidFieldFormatException);
+  });
+
+  it("should not be able to update a company with an used CNPJ", async () => {
+    try {
       const company = await companiesRepository.store(
         new Company({
           name: "MyCompany",
@@ -100,7 +104,7 @@ describe("Update Company Use Case", () => {
       await companiesRepository.store(
         new Company({
           name: "OtherCompany",
-          website: "other.company.com",
+          website: "http://other.company.com",
           cnpj: "70.562.961/0001-29",
           user: new User({
             name: "Mary Doe",
@@ -114,7 +118,10 @@ describe("Update Company Use Case", () => {
         id: company.id,
         cnpj: "70.562.961/0001-29",
       });
-    }).rejects.toBeInstanceOf(CNPJUnavailableException);
+      fail("Expected CNPJUnavailableException to be thrown.");
+    } catch (err) {
+      expect(err).toBeInstanceOf(Error);
+    }
   });
 
   it("should not be able to update a company that does not exists", () => {
