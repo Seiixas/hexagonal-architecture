@@ -2,8 +2,8 @@ import { randomUUID } from "crypto";
 
 interface ConstructorProps {
   id: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export class BaseEntity {
@@ -12,9 +12,9 @@ export class BaseEntity {
   protected _updatedAt: Date;
 
   constructor(props?: ConstructorProps) {
-    this._id = props ? props.id : randomUUID();
-    this._createdAt = new Date();
-    this._updatedAt = new Date();
+    this._id = props && props.id ? props.id : randomUUID();
+    this._createdAt = props && props.createdAt ? props.createdAt : new Date();
+    this._updatedAt = props && props.updatedAt ? props.updatedAt : new Date();
   }
 
   get id(): string {
