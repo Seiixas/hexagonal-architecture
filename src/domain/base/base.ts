@@ -2,6 +2,8 @@ import { randomUUID } from "crypto";
 
 interface ConstructorProps {
   id: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export class BaseEntity {

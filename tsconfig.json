@@ -9,7 +9,8 @@
     "paths": {
       "!shared/*": ["app/shared/*"],
       "!modules/*": ["app/modules/*"],
-      "!domain/*": ["domain/*"]
+      "!domain/*": ["domain/*"],
+      "!infra/*": ["infra.*"]
     },
     "resolveJsonModule": true,
     "esModuleInterop": true,           

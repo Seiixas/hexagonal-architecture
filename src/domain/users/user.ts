@@ -2,9 +2,12 @@ import { Company } from "!domain/companies/company";
 import { BaseEntity } from "../base/base";
 
 interface ConstructorProps {
+  id?: string;
   name: string;
   email: string;
   password: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export class User extends BaseEntity {
@@ -14,7 +17,11 @@ export class User extends BaseEntity {
   private _companies: Company[];
 
   constructor(props: ConstructorProps) {
-    super();
+    super({
+      id: props.id,
+      createdAt: props.createdAt,
+      updatedAt: props.updatedAt,
+    });
     this._name = props.name;
     this._email = props.email;
     this._password = props.password;

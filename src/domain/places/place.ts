@@ -2,6 +2,7 @@ import { BaseEntity } from "!domain/base/base";
 import { Company } from "!domain/companies/company";
 
 interface ConstructorProps {
+  id?: string;
   name: string;
   cep: string;
   street: string;
@@ -10,6 +11,8 @@ interface ConstructorProps {
   city: string;
   state: string;
   company: Company;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export class Place extends BaseEntity {
@@ -23,7 +26,11 @@ export class Place extends BaseEntity {
   private _company: Company;
 
   constructor(props: ConstructorProps) {
-    super();
+    super({
+      id: props.id,
+      updatedAt: props.updatedAt,
+      createdAt: props.createdAt,
+    });
     this.name = props.name;
     this.cep = props.cep;
     this.street = props.street;
