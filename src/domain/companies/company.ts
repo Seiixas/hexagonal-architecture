@@ -1,6 +1,6 @@
 import { BaseEntity } from "!domain/base/base";
+import { Place } from "!domain/places/place";
 import { User } from "!domain/users/user";
-import { Place } from "@prisma/client";
 
 interface ConstructorProps {
   id?: string;

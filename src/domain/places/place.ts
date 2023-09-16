@@ -10,7 +10,7 @@ interface ConstructorProps {
   district: string;
   city: string;
   state: string;
-  company: Company;
+  company?: Company;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -23,7 +23,7 @@ export class Place extends BaseEntity {
   private _district: string;
   private _city: string;
   private _state: string;
-  private _company: Company;
+  private _company: Company | null;
 
   constructor(props: ConstructorProps) {
     super({
@@ -38,7 +38,7 @@ export class Place extends BaseEntity {
     this.district = props.district;
     this.city = props.city;
     this.state = props.state;
-    this.company = props.company;
+    this.company = props.company ?? null;
   }
 
   public get name(): string {
