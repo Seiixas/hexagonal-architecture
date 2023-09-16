@@ -1,4 +1,3 @@
-import { CompaniesRepositoryInMemory } from "!modules/companies/infra/repositories/companies-in-memory.repository";
 import { UpdateCompanyService } from "./update-company.service";
 import { CompaniesRepository } from "!domain/companies/companies.repository";
 import { User } from "!domain/users/user";
@@ -6,6 +5,7 @@ import { InvalidFieldFormatException } from "!modules/companies/errors/invalid-f
 import { CNPJUnavailableException } from "!modules/companies/errors/cnpj-unavailable.exception";
 import { CompanyNotFoundException } from "!modules/companies/errors/company-not-found.exception";
 import { Company } from "!domain/companies/company";
+import { CompaniesRepositoryInMemory } from "!infra/database/in-memory/repositories/company/companies-in-memory.repository";
 
 let updateCompanyService: UpdateCompanyService;
 let companiesRepository: CompaniesRepository;

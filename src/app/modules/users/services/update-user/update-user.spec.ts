@@ -1,9 +1,9 @@
-import { UsersRepositoryInMemory } from "!modules/users/infra/repositories/users-in-memory.repository";
 import { UsersRepository } from "!domain/users/users.repository";
 import { UpdateUserService } from "./update-user.service";
 import { EmailUnavailableException } from "!modules/users/errors/email-unavailable.exception";
 import { UserNotFoundException } from "!modules/users/errors/user-not-found.exception";
 import { User } from "!domain/users/user";
+import { UsersRepositoryInMemory } from "!infra/database/in-memory/repositories/user/users-in-memory.repository";
 
 let updateUserService: UpdateUserService;
 let usersRepository: UsersRepository;

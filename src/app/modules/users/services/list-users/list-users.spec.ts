@@ -1,6 +1,6 @@
 import { User } from "!domain/users/user";
 import { UsersRepository } from "!domain/users/users.repository";
-import { UsersRepositoryInMemory } from "!modules/users/infra/repositories/users-in-memory.repository";
+import { UsersRepositoryInMemory } from "!infra/database/in-memory/repositories/user/users-in-memory.repository";
 import { ListUsersService } from "./list-users.service";
 
 let usersRepository: UsersRepository;

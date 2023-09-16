@@ -2,8 +2,8 @@ import { Company } from "!domain/companies/company";
 import { Place } from "!domain/places/place";
 import { PlacesRepository } from "!domain/places/places.repository";
 import { User } from "!domain/users/user";
+import { PlacesRepositoryInMemory } from "!infra/database/in-memory/repositories/company/places-in-memory.repository";
 import { PlaceNotFoundException } from "!modules/companies/errors/place-not-found.exception";
-import { PlacesRepositoryInMemory } from "!modules/companies/infra/repositories/places-in-memory.repository";
 import { ShowPlaceService } from "./show-place.service";
 
 let placesRepository: PlacesRepository;

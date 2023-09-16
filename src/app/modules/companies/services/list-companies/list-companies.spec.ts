@@ -1,8 +1,8 @@
 import { CompaniesRepository } from "!domain/companies/companies.repository";
 import { ListCompaniesService } from "./list-companies.service";
-import { CompaniesRepositoryInMemory } from "!modules/companies/infra/repositories/companies-in-memory.repository";
 import { User } from "!domain/users/user";
 import { Company } from "!domain/companies/company";
+import { CompaniesRepositoryInMemory } from "!infra/database/in-memory/repositories/company/companies-in-memory.repository";
 
 let listCompaniesService: ListCompaniesService;
 let companiesRepository: CompaniesRepository;

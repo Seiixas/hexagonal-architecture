@@ -10,7 +10,7 @@
       "!shared/*": ["app/shared/*"],
       "!modules/*": ["app/modules/*"],
       "!domain/*": ["domain/*"],
-      "!infra/*": ["infra.*"]
+      "!infra/*": ["infra/*"]
     },
     "resolveJsonModule": true,
     "esModuleInterop": true,           

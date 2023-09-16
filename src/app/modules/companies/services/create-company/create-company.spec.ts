@@ -1,5 +1,5 @@
-import { UsersRepositoryInMemory } from "!modules/users/infra/repositories/users-in-memory.repository";
-import { CompaniesRepositoryInMemory } from "!modules/companies/infra/repositories/companies-in-memory.repository";
+import { CompaniesRepositoryInMemory } from "!infra/database/in-memory/repositories/company/companies-in-memory.repository";
+import { UsersRepositoryInMemory } from "!infra/database/in-memory/repositories/user/users-in-memory.repository";
 
 import { UsersRepository } from "!domain/users/users.repository";
 import { CompaniesRepository } from "!domain/companies/companies.repository";

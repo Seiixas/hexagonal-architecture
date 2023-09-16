@@ -1,8 +1,8 @@
-import { UsersRepositoryInMemory } from "!modules/users/infra/repositories/users-in-memory.repository";
 import { UsersRepository } from "!domain/users/users.repository";
 import { DeleteUserService } from "./delete-user.service";
 import { UserNotFoundException } from "!modules/users/errors/user-not-found.exception";
 import { User } from "!domain/users/user";
+import { UsersRepositoryInMemory } from "!infra/database/in-memory/repositories/user/users-in-memory.repository";
 
 let deleteUserService: DeleteUserService;
 let usersRepository: UsersRepository;

@@ -2,9 +2,9 @@ import { DeletePlaceService } from "./delete-place.service";
 import { CompaniesRepository } from "!domain/companies/companies.repository";
 import { User } from "!domain/users/user";
 import { PlacesRepository } from "!domain/places/places.repository";
-import { PlacesRepositoryInMemory } from "!modules/companies/infra/repositories/places-in-memory.repository";
 import { Company } from "!domain/companies/company";
 import { Place } from "!domain/places/place";
+import { PlacesRepositoryInMemory } from "!infra/database/in-memory/repositories/company/places-in-memory.repository";
 
 let deletePlaceService: DeletePlaceService;
 let placesRepository: PlacesRepository;

@@ -2,8 +2,8 @@ import { CompaniesRepository } from "!domain/companies/companies.repository";
 import { Company } from "!domain/companies/company";
 import { PlacesRepository } from "!domain/places/places.repository";
 import { User } from "!domain/users/user";
-import { CompaniesRepositoryInMemory } from "!modules/companies/infra/repositories/companies-in-memory.repository";
-import { PlacesRepositoryInMemory } from "!modules/companies/infra/repositories/places-in-memory.repository";
+import { CompaniesRepositoryInMemory } from "!infra/database/in-memory/repositories/company/companies-in-memory.repository";
+import { PlacesRepositoryInMemory } from "!infra/database/in-memory/repositories/company/places-in-memory.repository";
 import { CreatePlaceService } from "./create-place.service";
 
 let companiesRepository: CompaniesRepository;

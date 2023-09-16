@@ -1,9 +1,9 @@
-import { CompaniesRepositoryInMemory } from "!modules/companies/infra/repositories/companies-in-memory.repository";
 import { CompaniesRepository } from "!domain/companies/companies.repository";
 import { DeleteCompanyService } from "./delete-company.service";
 import { User } from "!domain/users/user";
 import { CompanyNotFoundException } from "!modules/companies/errors/company-not-found.exception";
 import { Company } from "!domain/companies/company";
+import { CompaniesRepositoryInMemory } from "!infra/database/in-memory/repositories/company/companies-in-memory.repository";
 
 let deleteCompanyService: DeleteCompanyService;
 let companiesRepository: CompaniesRepository;
