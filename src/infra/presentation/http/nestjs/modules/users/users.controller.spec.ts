@@ -11,6 +11,7 @@ import { UsersRepositoryTypeORM } from "!infra/database/typeorm/repositories/use
 import { UserTypeORMEntity } from "!infra/database/typeorm/entities/user.entity";
 import { UserNotFoundException } from "!modules/users/errors/user-not-found.exception";
 import { EmailUnavailableException } from "!modules/users/errors/email-unavailable.exception";
+import { HasherProviderBcrypt } from "!infra/providers/hasher/implementations/bcrypt-hasher.provider";
 
 let connection: DataSource;
 let usersController: UsersController;
@@ -24,9 +25,13 @@ describe("Users Controller", () => {
     const usersRepository = new UsersRepositoryTypeORM(
       connection.getRepository(UserTypeORMEntity)
     );
+    const hasherProvider = new HasherProviderBcrypt();
 
     const listUsersService = new ListUsersService(usersRepository);
-    const createUserService = new CreateUserService(usersRepository);
+    const createUserService = new CreateUserService(
+      usersRepository,
+      hasherProvider
+    );
     const updateUserService = new UpdateUserService(usersRepository);
     const deleteUserService = new DeleteUserService(usersRepository);
     const showUserService = new ShowUserService(usersRepository);
