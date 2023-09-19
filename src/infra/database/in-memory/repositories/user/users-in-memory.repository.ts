@@ -27,13 +27,11 @@ export class UsersRepositoryInMemory implements UsersRepository {
   }
 
   async update(old: User, _new: Partial<User>): Promise<void> {
-    const user = this.users.find((user) => user === old);
+    const userToUpdate = this.users.findIndex((user) => user.id === old.id);
 
-    user.name = _new.name;
-    user.email = _new.email;
-    user.password = _new.password;
-    user.companies = _new.companies;
-
-    this.users.splice;
+    this.users[userToUpdate].name = _new.name ?? old.name;
+    this.users[userToUpdate].password = _new.password ?? old.password;
+    this.users[userToUpdate].companies = _new.companies ?? old.companies;
+    this.users[userToUpdate].email = _new.email ?? old.email;
   }
 }

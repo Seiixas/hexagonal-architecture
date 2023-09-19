@@ -2,15 +2,22 @@ import { CompaniesRepository } from "!domain/companies/companies.repository";
 import { Company } from "!domain/companies/company";
 
 export class CompaniesRepositoryInMemory implements CompaniesRepository {
-  update(old: Company, _new: Partial<Company>): Promise<void> {
-    throw new Error("Method not implemented.");
-  }
   private companies: Company[] = [];
 
   async store(company: Company): Promise<Company> {
     this.companies.push(company);
 
     return company;
+  }
+
+  async update(old: Company, _new: Partial<Company>): Promise<void> {
+    const companyToUpdate = this.companies.findIndex(
+      (company) => company.id === old.id
+    );
+
+    this.companies[companyToUpdate].name = _new.name ?? old.name;
+    this.companies[companyToUpdate].cnpj = _new.cnpj ?? old.cnpj;
+    this.companies[companyToUpdate].website = _new.website ?? old.website;
   }
 
   async find({ where }: { where: Partial<Company> }): Promise<Company> {

@@ -16,6 +16,8 @@ export class PlacesRepositoryTypeORM implements PlacesRepository {
   async find({ where }: { where: Partial<Place> }): Promise<Place> {
     const place = await this._repository.findOne({ where });
 
+    if (!place) return null;
+
     return PlaceMapper.toLocal(place);
   }
 

@@ -45,13 +45,13 @@ describe("Update Place Use Case", () => {
       })
     );
 
-    const placeUpdated = await updatePlaceService.execute({
+    await updatePlaceService.execute({
       id: place.id,
       street: "new-street",
     });
 
-    expect(placeUpdated).toBeDefined();
-    expect(placeUpdated.name).toEqual(place.name);
-    expect(placeUpdated.street).toEqual("new-street");
+    expect(
+      (await placesRepository.find({ where: { id: place.id } })).street
+    ).toEqual("new-street");
   });
 });

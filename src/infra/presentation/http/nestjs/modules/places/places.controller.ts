@@ -36,12 +36,12 @@ export class PlacesController {
   }
 
   @Get("/:placeId")
-  async profilePlace(@Param("placeId") placeId: string) {
+  async profile(@Param("placeId") placeId: string) {
     return await this.showPlaceService.execute(placeId);
   }
 
   @Put("/:placeId")
-  async updatePlace(
+  async update(
     @Param("placeId") placeId: string,
     @Body() updatePlaceDto: UpdateBodyDTO
   ) {
@@ -52,7 +52,7 @@ export class PlacesController {
   }
 
   @Delete("/:placeId")
-  async deletePlace(@Param("placeId") placeId: string) {
+  async delete(@Param("placeId") placeId: string) {
     return await this.deletePlaceService.execute(placeId);
   }
 }

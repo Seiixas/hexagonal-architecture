@@ -40,6 +40,7 @@ describe("Update Company Use Case", () => {
     });
 
     expect(companyUpdated.id).toEqual(company.id);
+    expect(companyUpdated.website).toEqual("https://other.website.com");
   });
 
   it("should not be able to update a company with invalid CNPJ", () => {

@@ -2,15 +2,25 @@ import { Place } from "!domain/places/place";
 import { PlacesRepository } from "!domain/places/places.repository";
 
 export class PlacesRepositoryInMemory implements PlacesRepository {
-  update(old: Place, _new: Partial<Place>): Promise<void> {
-    throw new Error("Method not implemented.");
-  }
   private places: Place[] = [];
 
   async store(place: Place): Promise<Place> {
     this.places.push(place);
 
     return place;
+  }
+
+  async update(old: Place, _new: Partial<Place>): Promise<void> {
+    const placeToUpdate = this.places.findIndex((place) => place.id === old.id);
+
+    this.places[placeToUpdate].cep = _new.cep ?? old.cep;
+    this.places[placeToUpdate].name = _new.name ?? old.name;
+    this.places[placeToUpdate].street = _new.street ?? old.street;
+    this.places[placeToUpdate].district = _new.district ?? old.district;
+    this.places[placeToUpdate].state = _new.cep ?? old.state;
+    this.places[placeToUpdate].city = _new.city ?? old.city;
+    this.places[placeToUpdate].number = _new.number ?? old.number;
+    this.places[placeToUpdate].company = _new.company ?? old.company;
   }
 
   async find({ where }: { where: Partial<Place> }): Promise<Place | null> {

@@ -30,6 +30,7 @@ describe("Update User Use Case", () => {
     });
 
     expect(userUpdated.id).toEqual(user.id);
+    expect(userUpdated.name).toEqual("Mary Doe");
   });
 
   it("should not be able to update an user with an used email", () => {
