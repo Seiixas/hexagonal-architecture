@@ -6,8 +6,8 @@ import { CompaniesRepository } from "!domain/companies/companies.repository";
 
 import { CreateCompanyService } from "./create-company.service";
 import { CreateUserService } from "!modules/users/services/create-user/create-user.service";
-import { HasherProvider } from "!infra/providers/hasher/hasher.provider";
-import { HasherProviderInMemory } from "!infra/providers/hasher/implementations/in-memory-hasher.provider";
+import { HasherProviderInMemory } from "!infra/providers/hasher/in-memory-hasher.provider";
+import { HasherProvider } from "app/providers/hasher/hasher.provider";
 
 let createCompanyService: CreateCompanyService;
 let createUserService: CreateUserService;

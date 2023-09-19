@@ -1,7 +1,7 @@
 import { User } from "!domain/users/user";
 import { UsersRepository } from "!domain/users/users.repository";
-import { HasherProvider } from "!infra/providers/hasher/hasher.provider";
 import { EmailUnavailableException } from "!modules/users/errors/email-unavailable.exception";
+import { HasherProvider } from "app/providers/hasher/hasher.provider";
 
 interface CreateUserDTO {
   name: string;

@@ -7,6 +7,7 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from "@nestjs/common";
 import { StoreBodyDTO, UpdateBodyDTO } from "./dtos/controller.dto";
 import { ListUsersService } from "!modules/users/services/list-users/list-users.service";
@@ -14,6 +15,7 @@ import { DeleteUserService } from "!modules/users/services/delete-user/delete-us
 import { ShowUserService } from "!modules/users/services/show-user/show-user.service";
 import { UpdateUserService } from "!modules/users/services/update-user/update-user.service";
 import { UserToView, UserView } from "./view/user.view";
+import { JwtAuthGuard } from "../auth/jwt-auth.guard";
 
 @Controller("users")
 export class UsersController {
@@ -30,22 +32,26 @@ export class UsersController {
     return UserView.ToView(await this.createUserService.execute(createUserDto));
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get()
   async all(): Promise<UserToView[]> {
     const users = await this.listUsersService.execute();
     return users.map((user) => UserView.ToView(user));
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get("/:userId")
   async profile(@Param("userId") userId: string): Promise<UserToView> {
     return UserView.ToView(await this.showUserService.execute(userId));
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete("/:userId")
   async delete(@Param("userId") userId: string): Promise<void> {
     return await this.deleteUserService.execute(userId);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Put("/:userId")
   async update(
     @Param("userId") userId: string,

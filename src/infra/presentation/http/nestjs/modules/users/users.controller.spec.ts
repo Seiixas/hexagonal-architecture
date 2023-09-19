@@ -10,7 +10,7 @@ import { ShowUserService } from "!modules/users/services/show-user/show-user.ser
 import { UsersRepositoryTypeORM } from "!infra/database/typeorm/repositories/user/users-typeorm.repository";
 import { UserTypeORMEntity } from "!infra/database/typeorm/entities/user.entity";
 import { UserNotFoundException } from "!modules/users/errors/user-not-found.exception";
-import { HasherProviderBcrypt } from "!infra/providers/hasher/implementations/bcrypt-hasher.provider";
+import { HasherProviderBcrypt } from "!infra/providers/hasher/bcrypt-hasher.provider";
 
 let connection: DataSource;
 let usersController: UsersController;

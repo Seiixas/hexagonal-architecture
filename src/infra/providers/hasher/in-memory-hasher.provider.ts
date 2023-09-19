@@ -1,4 +1,4 @@
-import { HasherProvider } from "../hasher.provider";
+import { HasherProvider } from "app/providers/hasher/hasher.provider";
 
 export class HasherProviderInMemory implements HasherProvider {
   private readonly alphabet = [

@@ -1,6 +1,5 @@
+import { HasherProvider } from "app/providers/hasher/hasher.provider";
 import { compare as useCompare, hash } from "bcrypt";
-
-import { HasherProvider } from "../hasher.provider";
 
 export class HasherProviderBcrypt implements HasherProvider {
   async hash(value: string): Promise<string> {

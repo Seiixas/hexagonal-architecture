@@ -8,7 +8,7 @@ import { UpdateUserService } from "!modules/users/services/update-user/update-us
 import { ShowUserService } from "!modules/users/services/show-user/show-user.service";
 import { DeleteUserService } from "!modules/users/services/delete-user/delete-user.service";
 import { ProvidersModule } from "../../providers/providers.module";
-import { HasherProvider } from "!infra/providers/hasher/hasher.provider";
+import { HasherProvider } from "app/providers/hasher/hasher.provider";
 
 @Module({
   imports: [DatabaseModule, ProvidersModule],

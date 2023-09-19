@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from "@nestjs/common";
 
 import { CreatePlaceService } from "!modules/companies/services/create-place/create-place.service";
@@ -15,7 +16,8 @@ import { DeletePlaceService } from "!modules/companies/services/delete-place/del
 import { UpdatePlaceService } from "!modules/companies/services/update-place/update-place.service";
 import { StoreBodyDTO, UpdateBodyDTO } from "./dtos/controller.dto";
 import { PlaceToView, PlaceView } from "./view/place.view";
-
+import { JwtAuthGuard } from "../auth/jwt-auth.guard";
+@UseGuards(JwtAuthGuard)
 @Controller("places")
 export class PlacesController {
   constructor(

@@ -2,8 +2,8 @@ import { UsersRepository } from "!domain/users/users.repository";
 import { CreateUserService } from "./create-user.service";
 import { EmailUnavailableException } from "!modules/users/errors/email-unavailable.exception";
 import { UsersRepositoryInMemory } from "!infra/database/in-memory/repositories/user/users-in-memory.repository";
-import { HasherProvider } from "!infra/providers/hasher/hasher.provider";
-import { HasherProviderInMemory } from "!infra/providers/hasher/implementations/in-memory-hasher.provider";
+import { HasherProviderInMemory } from "!infra/providers/hasher/in-memory-hasher.provider";
+import { HasherProvider } from "app/providers/hasher/hasher.provider";
 
 let createUserService: CreateUserService;
 let usersRepository: UsersRepository;

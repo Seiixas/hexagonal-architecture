@@ -11,10 +11,13 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from "@nestjs/common";
 import { StoreBodyDTO, UpdateBodyDTO } from "./dtos/controller.dto";
 import { CompanyToView, CompanyView } from "./view/company.view";
+import { JwtAuthGuard } from "../auth/jwt-auth.guard";
 
+@UseGuards(JwtAuthGuard)
 @Controller("companies")
 export class CompaniesController {
   constructor(
