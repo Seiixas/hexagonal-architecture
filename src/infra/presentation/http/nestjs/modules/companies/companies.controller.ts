@@ -11,9 +11,9 @@ import {
   Param,
   Post,
   Put,
-  SerializeOptions,
 } from "@nestjs/common";
 import { StoreBodyDTO, UpdateBodyDTO } from "./dtos/controller.dto";
+import { CompanyView } from "./view/company.view";
 
 @Controller("companies")
 export class CompaniesController {
@@ -27,17 +27,20 @@ export class CompaniesController {
 
   @Post()
   async create(@Body() createCompanyDto: StoreBodyDTO) {
-    return await this.createCompanyService.execute(createCompanyDto);
+    return CompanyView.ToView(
+      await this.createCompanyService.execute(createCompanyDto)
+    );
   }
 
   @Get()
   async all() {
-    return await this.listCompaniesService.execute();
+    const companies = await this.listCompaniesService.execute();
+    return companies.map((company) => CompanyView.ToView(company));
   }
 
   @Get("/:companyId")
   async profile(@Param("companyId") companyId: string) {
-    return await this.showCompanyService.execute(companyId);
+    return CompanyView.ToView(await this.showCompanyService.execute(companyId));
   }
 
   @Put("/:companyId")
