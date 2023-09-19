@@ -81,8 +81,6 @@ describe("Places Controller", () => {
 
   afterAll(async () => {
     await connection.dropDatabase();
-    await connection.close();
-    await connection.destroy();
   });
 
   it("should be able to create place", async () => {
