@@ -17,7 +17,7 @@ export class UpdateCompanyService {
     name,
     website,
     cnpj,
-  }: UpdateCompanyUseCaseDTO): Promise<Company> {
+  }: UpdateCompanyUseCaseDTO): Promise<void> {
     if (website && !Validation.isWebsite(website))
       throw new InvalidFieldFormatException({
         fieldName: "Website",
@@ -42,10 +42,10 @@ export class UpdateCompanyService {
       if (companyAlreadyExists) throw new CNPJUnavailableException();
     }
 
-    company.name = name ?? company.name;
-    company.website = website ?? company.website;
-    company.cnpj = cnpj ? Validation.isCNPJ(cnpj) : company.cnpj;
-
-    return await this.companiesRepository.store(company);
+    await this.companiesRepository.update(company, {
+      name,
+      website,
+      cnpj,
+    });
   }
 }

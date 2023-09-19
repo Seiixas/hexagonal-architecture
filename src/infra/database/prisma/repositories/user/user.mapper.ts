@@ -2,7 +2,7 @@ import { User as UserLocal } from "!domain/users/user";
 import { User as UserPrisma } from "@prisma/client";
 
 export class UserMapper {
-  public static toPrisma(user: UserLocal): UserPrisma {
+  public static toPrisma(user: UserLocal | Partial<UserLocal>): UserPrisma {
     return {
       id: user.id,
       password: user.password,

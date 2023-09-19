@@ -1,11 +1,25 @@
 import { Place } from "!domain/places/place";
 import { PlacesRepository } from "!domain/places/places.repository";
-import { prisma } from "../../connection";
+import { PrismaClient } from "@prisma/client";
 import { PlaceMapper } from "./place.mapper";
 
 export class PlacesRepositoryPrisma implements PlacesRepository {
+  constructor(private readonly _repository: PrismaClient) {}
+
+  async update(old: Place, _new: Partial<Place>): Promise<void> {
+    const oldPlace = PlaceMapper.toPrisma(old);
+    const newPlace = PlaceMapper.toPrisma(_new);
+
+    await this._repository.place.update({
+      data: { ...newPlace },
+      where: {
+        id: oldPlace.id,
+      },
+    });
+  }
+
   async allByCompanyId(companyId: string): Promise<Place[]> {
-    const places = await prisma.place.findMany({
+    const places = await this._repository.place.findMany({
       where: { companyId },
     });
 
@@ -14,13 +28,15 @@ export class PlacesRepositoryPrisma implements PlacesRepository {
 
   async store(data: Place): Promise<Place> {
     const place = PlaceMapper.toPrisma(data);
-    await prisma.place.create({ data: place });
+    await this._repository.place.create({ data: place });
 
     return data;
   }
 
   async find({ where }: { where: Partial<Place> }): Promise<Place> {
-    const place = await prisma.place.findFirst({ where });
+    const place = await this._repository.place.findFirst({ where });
+
+    if (!place) return null;
 
     return PlaceMapper.toLocal(place);
   }
@@ -28,11 +44,11 @@ export class PlacesRepositoryPrisma implements PlacesRepository {
   async remove(item: Place): Promise<void> {
     const place = PlaceMapper.toPrisma(item);
 
-    await prisma.place.delete({ where: { id: place.id } });
+    await this._repository.place.delete({ where: { id: place.id } });
   }
 
   async all(): Promise<Place[]> {
-    const places = await prisma.place.findMany();
+    const places = await this._repository.place.findMany();
 
     return places.map((place) => PlaceMapper.toLocal(place));
   }

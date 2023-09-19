@@ -14,9 +14,27 @@ export class UsersRepositoryTypeORM implements UsersRepository {
   }
 
   async find({ where }: { where: Partial<User> }): Promise<User> {
-    const user = await this._repository.findOne({ where });
+    const user = UserMapper.toTypeORM(where);
 
-    return UserMapper.toLocal(user);
+    const userFound = await this._repository.findOne({ where: user });
+
+    if (!userFound) return null;
+
+    return UserMapper.toLocal(userFound);
+  }
+
+  async update(old: User, _new: Partial<User>) {
+    const oldUser = UserMapper.toTypeORM(old);
+    const newUser = UserMapper.toTypeORM(_new);
+
+    await this._repository
+      .createQueryBuilder()
+      .update(oldUser)
+      .set({
+        ...newUser,
+      })
+      .where("id = :id", { id: oldUser.id })
+      .execute();
   }
 
   async remove(item: User): Promise<void> {

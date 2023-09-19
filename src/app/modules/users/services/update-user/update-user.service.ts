@@ -11,12 +11,7 @@ interface UpdateUserUseCaseDTO extends Partial<User> {
 export class UpdateUserService {
   constructor(private readonly usersRepository: UsersRepository) {}
 
-  async execute({
-    id,
-    name,
-    password,
-    email,
-  }: UpdateUserUseCaseDTO): Promise<Omit<User, "password">> {
+  async execute({ id, name, password, email }: UpdateUserUseCaseDTO) {
     if (email) {
       const userAlreadyExists = await this.usersRepository.find({
         where: { email },
@@ -29,12 +24,6 @@ export class UpdateUserService {
 
     if (!user) throw new UserNotFoundException();
 
-    user.name = name ?? user.name;
-    user.password = password ?? user.password;
-    user.email = user.email ?? email;
-
-    await this.usersRepository.store(user);
-
-    return user;
+    await this.usersRepository.update(user, { name, password, email });
   }
 }

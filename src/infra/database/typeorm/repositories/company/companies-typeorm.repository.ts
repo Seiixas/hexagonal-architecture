@@ -14,9 +14,16 @@ export class CompaniesRepositoryTypeORM implements CompaniesRepository {
   }
 
   async find({ where }: { where: Partial<Company> }): Promise<Company> {
-    const company = await this._repository.findOne({ where });
+    const company = CompanyMapper.toTypeORM(where);
 
-    return CompanyMapper.toLocal(company);
+    const companyFound = await this._repository.findOne({
+      where: company,
+      relations: { places: true },
+    });
+
+    if (!companyFound) return null;
+
+    return CompanyMapper.toLocal(companyFound);
   }
 
   async remove(item: Company): Promise<void> {
@@ -27,5 +34,19 @@ export class CompaniesRepositoryTypeORM implements CompaniesRepository {
     const companies = await this._repository.find();
 
     return companies.map((company) => CompanyMapper.toLocal(company));
+  }
+
+  async update(old: Company, _new: Partial<Company>): Promise<void> {
+    const oldCompany = CompanyMapper.toTypeORM(old);
+    const newCompany = CompanyMapper.toTypeORM(_new);
+
+    await this._repository
+      .createQueryBuilder()
+      .update(oldCompany)
+      .set({
+        ...newCompany,
+      })
+      .where("id = :id", { id: oldCompany.id })
+      .execute();
   }
 }

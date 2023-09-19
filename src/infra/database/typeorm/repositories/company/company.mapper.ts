@@ -3,12 +3,19 @@ import { CompanyTypeORMEntity as CompanyTypeOrm } from "../../entities/company.e
 import { PlaceMapper } from "../place/place.mapper";
 
 export class CompanyMapper {
-  public static toTypeORM(company: CompanyLocal): CompanyTypeOrm {
-    const userTypeOrm = new CompanyTypeOrm();
+  public static toTypeORM(
+    company: CompanyLocal | Partial<CompanyLocal>
+  ): CompanyTypeOrm {
+    const companyTypeOrm = new CompanyTypeOrm();
 
-    Object.assign(userTypeOrm, company);
+    companyTypeOrm.id = company.id;
+    companyTypeOrm.name = company.name;
+    companyTypeOrm.cnpj = company.cnpj;
+    companyTypeOrm.website = company.website;
+    companyTypeOrm.createdAt = company.createdAt;
+    companyTypeOrm.updatedAt = company.updatedAt;
 
-    return userTypeOrm;
+    return companyTypeOrm;
   }
 
   public static toLocal(company: CompanyTypeOrm): CompanyLocal {

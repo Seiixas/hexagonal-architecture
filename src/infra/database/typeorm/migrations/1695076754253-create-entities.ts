@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-export class CreateEntities1694818895161 implements MigrationInterface {
-    name = 'CreateEntities1694818895161'
+export class CreateEntities1695076754253 implements MigrationInterface {
+    name = 'CreateEntities1695076754253'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`
@@ -23,7 +23,7 @@ export class CreateEntities1694818895161 implements MigrationInterface {
                 "name" varchar NOT NULL,
                 "website" varchar NOT NULL,
                 "cnpj" varchar NOT NULL,
-                "UserId" varchar,
+                "userId" varchar,
                 CONSTRAINT "UQ_703760d095b8e399e34950f4960" UNIQUE ("cnpj")
             )
         `);
@@ -39,7 +39,7 @@ export class CreateEntities1694818895161 implements MigrationInterface {
                 "district" varchar NOT NULL,
                 "city" varchar NOT NULL,
                 "state" varchar NOT NULL,
-                "CompanyId" varchar
+                "companyId" varchar
             )
         `);
         await queryRunner.query(`
@@ -50,9 +50,9 @@ export class CreateEntities1694818895161 implements MigrationInterface {
                 "name" varchar NOT NULL,
                 "website" varchar NOT NULL,
                 "cnpj" varchar NOT NULL,
-                "UserId" varchar,
+                "userId" varchar,
                 CONSTRAINT "UQ_703760d095b8e399e34950f4960" UNIQUE ("cnpj"),
-                CONSTRAINT "FK_e86ecd593916daacf397111390e" FOREIGN KEY ("UserId") REFERENCES "users" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+                CONSTRAINT "FK_6d64e8c7527a9e4af83cc66cbf7" FOREIGN KEY ("userId") REFERENCES "users" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION
             )
         `);
         await queryRunner.query(`
@@ -63,7 +63,7 @@ export class CreateEntities1694818895161 implements MigrationInterface {
                     "name",
                     "website",
                     "cnpj",
-                    "UserId"
+                    "userId"
                 )
             SELECT "id",
                 "created_at",
@@ -71,7 +71,7 @@ export class CreateEntities1694818895161 implements MigrationInterface {
                 "name",
                 "website",
                 "cnpj",
-                "UserId"
+                "userId"
             FROM "companies"
         `);
         await queryRunner.query(`
@@ -93,8 +93,8 @@ export class CreateEntities1694818895161 implements MigrationInterface {
                 "district" varchar NOT NULL,
                 "city" varchar NOT NULL,
                 "state" varchar NOT NULL,
-                "CompanyId" varchar,
-                CONSTRAINT "FK_cf4c646f087a0d2c6dd52254009" FOREIGN KEY ("CompanyId") REFERENCES "companies" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+                "companyId" varchar,
+                CONSTRAINT "FK_fd173428a711ad0f0f879ef976c" FOREIGN KEY ("companyId") REFERENCES "companies" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION
             )
         `);
         await queryRunner.query(`
@@ -109,7 +109,7 @@ export class CreateEntities1694818895161 implements MigrationInterface {
                     "district",
                     "city",
                     "state",
-                    "CompanyId"
+                    "companyId"
                 )
             SELECT "id",
                 "created_at",
@@ -121,7 +121,7 @@ export class CreateEntities1694818895161 implements MigrationInterface {
                 "district",
                 "city",
                 "state",
-                "CompanyId"
+                "companyId"
             FROM "places"
         `);
         await queryRunner.query(`
@@ -150,7 +150,7 @@ export class CreateEntities1694818895161 implements MigrationInterface {
                 "district" varchar NOT NULL,
                 "city" varchar NOT NULL,
                 "state" varchar NOT NULL,
-                "CompanyId" varchar
+                "companyId" varchar
             )
         `);
         await queryRunner.query(`
@@ -165,7 +165,7 @@ export class CreateEntities1694818895161 implements MigrationInterface {
                     "district",
                     "city",
                     "state",
-                    "CompanyId"
+                    "companyId"
                 )
             SELECT "id",
                 "created_at",
@@ -177,7 +177,7 @@ export class CreateEntities1694818895161 implements MigrationInterface {
                 "district",
                 "city",
                 "state",
-                "CompanyId"
+                "companyId"
             FROM "temporary_places"
         `);
         await queryRunner.query(`
@@ -195,7 +195,7 @@ export class CreateEntities1694818895161 implements MigrationInterface {
                 "name" varchar NOT NULL,
                 "website" varchar NOT NULL,
                 "cnpj" varchar NOT NULL,
-                "UserId" varchar,
+                "userId" varchar,
                 CONSTRAINT "UQ_703760d095b8e399e34950f4960" UNIQUE ("cnpj")
             )
         `);
@@ -207,7 +207,7 @@ export class CreateEntities1694818895161 implements MigrationInterface {
                     "name",
                     "website",
                     "cnpj",
-                    "UserId"
+                    "userId"
                 )
             SELECT "id",
                 "created_at",
@@ -215,7 +215,7 @@ export class CreateEntities1694818895161 implements MigrationInterface {
                 "name",
                 "website",
                 "cnpj",
-                "UserId"
+                "userId"
             FROM "temporary_companies"
         `);
         await queryRunner.query(`

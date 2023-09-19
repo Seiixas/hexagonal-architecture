@@ -9,7 +9,9 @@ interface CompanyPrismaInterface extends CompanyPrisma {
 }
 
 export class CompanyMapper {
-  public static toPrisma(company: CompanyLocal): CompanyPrisma {
+  public static toPrisma(
+    company: CompanyLocal | Partial<CompanyLocal>
+  ): CompanyPrisma {
     return {
       id: company.id,
       name: company.name,
@@ -17,7 +19,7 @@ export class CompanyMapper {
       cnpj: company.cnpj,
       created_at: company.createdAt,
       updated_at: company.updatedAt,
-      userId: company.user.id,
+      userId: company.user ? company.user.id : null,
     };
   }
 
@@ -27,7 +29,7 @@ export class CompanyMapper {
       name: company.name,
       website: company.website,
       cnpj: company.cnpj,
-      user: UserMapper.toLocal(company.user),
+      user: company.user ? UserMapper.toLocal(company.user) : null,
       updatedAt: company.updated_at,
       createdAt: company.created_at,
     });

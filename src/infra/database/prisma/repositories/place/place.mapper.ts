@@ -7,7 +7,7 @@ interface PlacePrismaInterface extends PlacePrisma {
 }
 
 export class PlaceMapper {
-  public static toPrisma(place: PlaceLocal): PlacePrisma {
+  public static toPrisma(place: PlaceLocal | Partial<PlaceLocal>): PlacePrisma {
     return {
       id: place.id,
       name: place.name,
@@ -31,7 +31,7 @@ export class PlaceMapper {
       street: place.street,
       number: place.number,
       district: place.district,
-      company: CompanyMapper.toLocal(place.company),
+      company: place.company ? CompanyMapper.toLocal(place.company) : null,
       city: place.city,
       cep: place.cep,
       updatedAt: place.updated_at,

@@ -2,6 +2,9 @@ import { CompaniesRepository } from "!domain/companies/companies.repository";
 import { Company } from "!domain/companies/company";
 
 export class CompaniesRepositoryInMemory implements CompaniesRepository {
+  update(old: Company, _new: Partial<Company>): Promise<void> {
+    throw new Error("Method not implemented.");
+  }
   private companies: Company[] = [];
 
   async store(company: Company): Promise<Company> {

@@ -2,6 +2,9 @@ import { Place } from "!domain/places/place";
 import { PlacesRepository } from "!domain/places/places.repository";
 
 export class PlacesRepositoryInMemory implements PlacesRepository {
+  update(old: Place, _new: Partial<Place>): Promise<void> {
+    throw new Error("Method not implemented.");
+  }
   private places: Place[] = [];
 
   async store(place: Place): Promise<Place> {

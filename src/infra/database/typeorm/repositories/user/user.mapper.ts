@@ -2,10 +2,16 @@ import { User as UserLocal } from "!domain/users/user";
 import { UserTypeORMEntity as UserTypeOrm } from "../../entities/user.entity";
 
 export class UserMapper {
-  public static toTypeORM(user: UserLocal): UserTypeOrm {
+  public static toTypeORM(user: UserLocal | Partial<UserLocal>): UserTypeOrm {
     const userTypeOrm = new UserTypeOrm();
 
-    Object.assign(userTypeOrm, user);
+    userTypeOrm.name = user.name;
+    userTypeOrm.companies = user.companies;
+    userTypeOrm.createdAt = user.createdAt;
+    userTypeOrm.updatedAt = user.updatedAt;
+    userTypeOrm.email = user.email;
+    userTypeOrm.password = user.password;
+    userTypeOrm.id = user.id;
 
     return userTypeOrm;
   }

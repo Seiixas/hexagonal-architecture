@@ -36,7 +36,7 @@ export class CreateCompanyService {
       throw new InvalidFieldFormatException({ fieldName: "Website" });
 
     const companyAlreadyExists = await this.companiesRepository.find({
-      where: { cnpj },
+      where: { cnpj: cnpj },
     });
 
     if (companyAlreadyExists) throw new CNPJUnavailableException();

@@ -25,4 +25,15 @@ export class UsersRepositoryInMemory implements UsersRepository {
   async all(): Promise<User[]> {
     return this.users;
   }
+
+  async update(old: User, _new: Partial<User>): Promise<void> {
+    const user = this.users.find((user) => user === old);
+
+    user.name = _new.name;
+    user.email = _new.email;
+    user.password = _new.password;
+    user.companies = _new.companies;
+
+    this.users.splice;
+  }
 }

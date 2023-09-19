@@ -31,6 +31,14 @@ export class UpdatePlaceService {
     place.district = district ?? place.district;
     place.city = city ?? place.city;
 
-    return await this.placesRepository.store(place);
+    await this.placesRepository.update(place, {
+      cep,
+      street,
+      state,
+      number,
+      name,
+      district,
+      city,
+    });
   }
 }
