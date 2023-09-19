@@ -13,11 +13,25 @@ import {
   Put,
   UseGuards,
 } from "@nestjs/common";
-import { StoreBodyDTO, UpdateBodyDTO } from "./dtos/controller.dto";
+import { StoreCompanyDTO, UpdateCompanyDTO } from "./dtos/controller.dto";
 import { CompanyToView, CompanyView } from "./view/company.view";
 import { JwtAuthGuard } from "../auth/jwt-auth.guard";
+import {
+  ApiBadRequestResponse,
+  ApiCreatedResponse,
+  ApiResponse,
+  ApiTags,
+} from "@nestjs/swagger";
+import {
+  COMPANY_NOT_FOUND_EXCEPTION,
+  INVALID_CNPJ_FORMAT_EXCEPTION,
+  INVALID_WEBSITE_FORMAT_EXCEPTION,
+  UNAUTHORIZED_USER_EXCEPTION,
+  USER_NOT_FOUND_EXCEPTION,
+} from "../../swagger/errors";
 
 @UseGuards(JwtAuthGuard)
+@ApiTags("companies")
 @Controller("companies")
 export class CompaniesController {
   constructor(
@@ -29,27 +43,74 @@ export class CompaniesController {
   ) {}
 
   @Post()
-  async create(@Body() createCompanyDto: StoreBodyDTO): Promise<CompanyToView> {
+  @ApiCreatedResponse({
+    description: "Company created",
+  })
+  @ApiBadRequestResponse({
+    description: "Body fields incorrect",
+  })
+  @ApiResponse({
+    status: UNAUTHORIZED_USER_EXCEPTION.statusCode,
+    description: UNAUTHORIZED_USER_EXCEPTION.message,
+  })
+  @ApiResponse({
+    status: USER_NOT_FOUND_EXCEPTION.statusCode,
+    description: USER_NOT_FOUND_EXCEPTION.message,
+  })
+  @ApiResponse({
+    status: INVALID_CNPJ_FORMAT_EXCEPTION.statusCode,
+    description: INVALID_CNPJ_FORMAT_EXCEPTION.message,
+  })
+  @ApiResponse({
+    status: INVALID_WEBSITE_FORMAT_EXCEPTION.statusCode,
+    description: INVALID_WEBSITE_FORMAT_EXCEPTION.message,
+  })
+  async create(
+    @Body() createCompanyDto: StoreCompanyDTO
+  ): Promise<CompanyToView> {
     return CompanyView.ToView(
       await this.createCompanyService.execute(createCompanyDto)
     );
   }
 
   @Get()
+  @ApiResponse({
+    status: UNAUTHORIZED_USER_EXCEPTION.statusCode,
+    description: UNAUTHORIZED_USER_EXCEPTION.message,
+  })
   async all(): Promise<CompanyToView[]> {
     const companies = await this.listCompaniesService.execute();
     return companies.map((company) => CompanyView.ToView(company));
   }
 
   @Get("/:companyId")
+  @ApiResponse({
+    status: UNAUTHORIZED_USER_EXCEPTION.statusCode,
+    description: UNAUTHORIZED_USER_EXCEPTION.message,
+  })
+  @ApiResponse({
+    status: COMPANY_NOT_FOUND_EXCEPTION.statusCode,
+    description: COMPANY_NOT_FOUND_EXCEPTION.message,
+  })
   async profile(@Param("companyId") companyId: string): Promise<CompanyToView> {
     return CompanyView.ToView(await this.showCompanyService.execute(companyId));
   }
 
   @Put("/:companyId")
+  @ApiResponse({
+    status: UNAUTHORIZED_USER_EXCEPTION.statusCode,
+    description: UNAUTHORIZED_USER_EXCEPTION.message,
+  })
+  @ApiResponse({
+    status: COMPANY_NOT_FOUND_EXCEPTION.statusCode,
+    description: COMPANY_NOT_FOUND_EXCEPTION.message,
+  })
+  @ApiBadRequestResponse({
+    description: "Body fields incorrect",
+  })
   async update(
     @Param("companyId") companyId: string,
-    @Body() updateCompanyDto: UpdateBodyDTO
+    @Body() updateCompanyDto: UpdateCompanyDTO
   ) {
     return await this.updateCompanyService.execute({
       id: companyId,
@@ -58,6 +119,14 @@ export class CompaniesController {
   }
 
   @Delete("/:companyId")
+  @ApiResponse({
+    status: UNAUTHORIZED_USER_EXCEPTION.statusCode,
+    description: UNAUTHORIZED_USER_EXCEPTION.message,
+  })
+  @ApiResponse({
+    status: COMPANY_NOT_FOUND_EXCEPTION.statusCode,
+    description: COMPANY_NOT_FOUND_EXCEPTION.message,
+  })
   async delete(@Param("companyId") companyId: string) {
     return await this.deleteCompanyService.execute(companyId);
   }

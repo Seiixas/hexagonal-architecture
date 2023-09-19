@@ -3,6 +3,8 @@ import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./modules/app.module";
 
 import "reflect-metadata";
+import { SwaggerModule } from "@nestjs/swagger";
+import { swaggerConfig } from "./config/swagger.config";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -14,6 +16,9 @@ async function bootstrap() {
       stopAtFirstError: true,
     })
   );
+
+  const swaggerDocumentation = SwaggerModule.createDocument(app, swaggerConfig);
+  SwaggerModule.setup("api-docs", app, swaggerDocumentation);
 
   app.enableCors();
 

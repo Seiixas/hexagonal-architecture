@@ -12,11 +12,11 @@ export class AppError {
     this._statusCode = props.statusCode ?? 400;
   }
 
-  get message(): string {
+  public get message(): string {
     return this._message;
   }
 
-  get statusCode(): number {
+  public get statusCode(): number {
     return this._statusCode;
   }
 }
