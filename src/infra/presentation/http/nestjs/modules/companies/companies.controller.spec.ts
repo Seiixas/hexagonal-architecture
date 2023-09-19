@@ -150,8 +150,6 @@ describe("Companies Controller", () => {
         userId,
       });
 
-      console.log(company);
-
       await companiesController.create({
         name: "John",
         cnpj: "40.956.311/0001-41",

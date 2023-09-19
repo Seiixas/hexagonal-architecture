@@ -14,6 +14,7 @@ import { ListPlacesService } from "!modules/companies/services/list-places/list-
 import { DeletePlaceService } from "!modules/companies/services/delete-place/delete-place.service";
 import { UpdatePlaceService } from "!modules/companies/services/update-place/update-place.service";
 import { StoreBodyDTO, UpdateBodyDTO } from "./dtos/controller.dto";
+import { PlaceToView, PlaceView } from "./view/place.view";
 
 @Controller("places")
 export class PlacesController {
@@ -26,25 +27,28 @@ export class PlacesController {
   ) {}
 
   @Post()
-  async create(@Body() createPlaceDto: StoreBodyDTO) {
-    return await this.createPlaceService.execute(createPlaceDto);
+  async create(@Body() createPlaceDto: StoreBodyDTO): Promise<PlaceToView> {
+    return PlaceView.ToView(
+      await this.createPlaceService.execute(createPlaceDto)
+    );
   }
 
   @Get()
-  async all() {
-    return await this.listPlacesService.execute();
+  async all(): Promise<PlaceToView[]> {
+    const places = await this.listPlacesService.execute();
+    return places.map((place) => PlaceView.ToView(place));
   }
 
   @Get("/:placeId")
-  async profile(@Param("placeId") placeId: string) {
-    return await this.showPlaceService.execute(placeId);
+  async profile(@Param("placeId") placeId: string): Promise<PlaceToView> {
+    return PlaceView.ToView(await this.showPlaceService.execute(placeId));
   }
 
   @Put("/:placeId")
   async update(
     @Param("placeId") placeId: string,
     @Body() updatePlaceDto: UpdateBodyDTO
-  ) {
+  ): Promise<void> {
     return await this.updatePlaceService.execute({
       id: placeId,
       ...updatePlaceDto,
@@ -52,7 +56,7 @@ export class PlacesController {
   }
 
   @Delete("/:placeId")
-  async delete(@Param("placeId") placeId: string) {
+  async delete(@Param("placeId") placeId: string): Promise<void> {
     return await this.deletePlaceService.execute(placeId);
   }
 }

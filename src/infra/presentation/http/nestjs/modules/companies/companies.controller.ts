@@ -13,7 +13,7 @@ import {
   Put,
 } from "@nestjs/common";
 import { StoreBodyDTO, UpdateBodyDTO } from "./dtos/controller.dto";
-import { CompanyView } from "./view/company.view";
+import { CompanyToView, CompanyView } from "./view/company.view";
 
 @Controller("companies")
 export class CompaniesController {
@@ -26,20 +26,20 @@ export class CompaniesController {
   ) {}
 
   @Post()
-  async create(@Body() createCompanyDto: StoreBodyDTO) {
+  async create(@Body() createCompanyDto: StoreBodyDTO): Promise<CompanyToView> {
     return CompanyView.ToView(
       await this.createCompanyService.execute(createCompanyDto)
     );
   }
 
   @Get()
-  async all() {
+  async all(): Promise<CompanyToView[]> {
     const companies = await this.listCompaniesService.execute();
     return companies.map((company) => CompanyView.ToView(company));
   }
 
   @Get("/:companyId")
-  async profile(@Param("companyId") companyId: string) {
+  async profile(@Param("companyId") companyId: string): Promise<CompanyToView> {
     return CompanyView.ToView(await this.showCompanyService.execute(companyId));
   }
 

@@ -10,7 +10,6 @@ import { ShowUserService } from "!modules/users/services/show-user/show-user.ser
 import { UsersRepositoryTypeORM } from "!infra/database/typeorm/repositories/user/users-typeorm.repository";
 import { UserTypeORMEntity } from "!infra/database/typeorm/entities/user.entity";
 import { UserNotFoundException } from "!modules/users/errors/user-not-found.exception";
-import { EmailUnavailableException } from "!modules/users/errors/email-unavailable.exception";
 import { HasherProviderBcrypt } from "!infra/providers/hasher/implementations/bcrypt-hasher.provider";
 
 let connection: DataSource;
@@ -79,7 +78,7 @@ describe("Users Controller", () => {
     userId = user.id;
 
     expect(user).toBeDefined();
-    expect(user).toHaveProperty("_id");
+    expect(user).toHaveProperty("id");
   });
 
   it("should be able to list all users", async () => {

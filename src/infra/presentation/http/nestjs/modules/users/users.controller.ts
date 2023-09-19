@@ -13,6 +13,7 @@ import { ListUsersService } from "!modules/users/services/list-users/list-users.
 import { DeleteUserService } from "!modules/users/services/delete-user/delete-user.service";
 import { ShowUserService } from "!modules/users/services/show-user/show-user.service";
 import { UpdateUserService } from "!modules/users/services/update-user/update-user.service";
+import { UserToView, UserView } from "./view/user.view";
 
 @Controller("users")
 export class UsersController {
@@ -25,22 +26,23 @@ export class UsersController {
   ) {}
 
   @Post()
-  async create(@Body() createUserDto: StoreBodyDTO) {
-    return await this.createUserService.execute(createUserDto);
+  async create(@Body() createUserDto: StoreBodyDTO): Promise<UserToView> {
+    return UserView.ToView(await this.createUserService.execute(createUserDto));
   }
 
   @Get()
-  async all() {
-    return await this.listUsersService.execute();
+  async all(): Promise<UserToView[]> {
+    const users = await this.listUsersService.execute();
+    return users.map((user) => UserView.ToView(user));
   }
 
   @Get("/:userId")
-  async profile(@Param("userId") userId: string) {
-    return await this.showUserService.execute(userId);
+  async profile(@Param("userId") userId: string): Promise<UserToView> {
+    return UserView.ToView(await this.showUserService.execute(userId));
   }
 
   @Delete("/:userId")
-  async delete(@Param("userId") userId: string) {
+  async delete(@Param("userId") userId: string): Promise<void> {
     return await this.deleteUserService.execute(userId);
   }
 
@@ -48,7 +50,7 @@ export class UsersController {
   async update(
     @Param("userId") userId: string,
     @Body() updateUserDto: UpdateBodyDTO
-  ) {
+  ): Promise<void> {
     return await this.updateUserService.execute({
       id: userId,
       ...updateUserDto,

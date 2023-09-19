@@ -98,7 +98,7 @@ describe("Places Controller", () => {
     placeId = place.id;
 
     expect(place).toBeDefined();
-    expect(place).toHaveProperty("_id");
+    expect(place).toHaveProperty("id");
   });
 
   it("should be able to list all places", async () => {
