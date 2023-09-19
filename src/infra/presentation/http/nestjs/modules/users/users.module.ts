@@ -7,17 +7,22 @@ import { ListUsersService } from "!modules/users/services/list-users/list-users.
 import { UpdateUserService } from "!modules/users/services/update-user/update-user.service";
 import { ShowUserService } from "!modules/users/services/show-user/show-user.service";
 import { DeleteUserService } from "!modules/users/services/delete-user/delete-user.service";
+import { ProvidersModule } from "../../providers/providers.module";
+import { HasherProvider } from "!infra/providers/hasher/hasher.provider";
 
 @Module({
-  imports: [DatabaseModule],
+  imports: [DatabaseModule, ProvidersModule],
   controllers: [UsersController],
   providers: [
     {
       provide: CreateUserService,
-      useFactory: (usersRepository: UsersRepository) => {
-        return new CreateUserService(usersRepository);
+      useFactory: (
+        usersRepository: UsersRepository,
+        hasherProvider: HasherProvider
+      ) => {
+        return new CreateUserService(usersRepository, hasherProvider);
       },
-      inject: [UsersRepository],
+      inject: [UsersRepository, HasherProvider],
     },
     {
       provide: ListUsersService,
