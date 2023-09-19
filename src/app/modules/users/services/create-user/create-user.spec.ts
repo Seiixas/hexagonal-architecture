@@ -2,14 +2,18 @@ import { UsersRepository } from "!domain/users/users.repository";
 import { CreateUserService } from "./create-user.service";
 import { EmailUnavailableException } from "!modules/users/errors/email-unavailable.exception";
 import { UsersRepositoryInMemory } from "!infra/database/in-memory/repositories/user/users-in-memory.repository";
+import { HasherProvider } from "!infra/providers/hasher/hasher.provider";
+import { HasherProviderInMemory } from "!infra/providers/hasher/implementations/in-memory-hasher.provider";
 
 let createUserService: CreateUserService;
 let usersRepository: UsersRepository;
+let hasherProvider: HasherProvider;
 
 describe("Create User Use Case", () => {
   beforeEach(() => {
     usersRepository = new UsersRepositoryInMemory();
-    createUserService = new CreateUserService(usersRepository);
+    hasherProvider = new HasherProviderInMemory();
+    createUserService = new CreateUserService(usersRepository, hasherProvider);
   });
 
   it("should be able to create a user", async () => {
@@ -20,6 +24,7 @@ describe("Create User Use Case", () => {
     });
 
     expect(user).toBeDefined();
+    expect(user.password).not.toEqual("my-secret-password");
   });
 
   it("should not be able to create a user with e-mail in use", () => {

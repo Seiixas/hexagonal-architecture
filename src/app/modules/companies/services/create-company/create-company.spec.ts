@@ -6,24 +6,26 @@ import { CompaniesRepository } from "!domain/companies/companies.repository";
 
 import { CreateCompanyService } from "./create-company.service";
 import { CreateUserService } from "!modules/users/services/create-user/create-user.service";
-import { CNPJUnavailableException } from "!modules/companies/errors/cnpj-unavailable.exception";
-import { InvalidFieldFormatException } from "!modules/companies/errors/invalid-field-format.exception";
+import { HasherProvider } from "!infra/providers/hasher/hasher.provider";
+import { HasherProviderInMemory } from "!infra/providers/hasher/implementations/in-memory-hasher.provider";
 
 let createCompanyService: CreateCompanyService;
 let createUserService: CreateUserService;
 let usersRepository: UsersRepository;
 let companiesRepository: CompaniesRepository;
 let userId: string;
+let hasherProvider: HasherProvider;
 
 describe("Create Company Use Case", () => {
   beforeEach(async () => {
     usersRepository = new UsersRepositoryInMemory();
+    hasherProvider = new HasherProviderInMemory();
     companiesRepository = new CompaniesRepositoryInMemory();
     createCompanyService = new CreateCompanyService(
       companiesRepository,
       usersRepository
     );
-    createUserService = new CreateUserService(usersRepository);
+    createUserService = new CreateUserService(usersRepository, hasherProvider);
 
     const userCreated = await createUserService.execute({
       name: "John Doe",
