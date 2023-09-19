@@ -94,7 +94,7 @@ describe("Companies Controller", () => {
     userId = company.id;
 
     expect(company).toBeDefined();
-    expect(company).toHaveProperty("_id");
+    expect(company).toHaveProperty("id");
   });
 
   it("should be able to list all companies", async () => {
