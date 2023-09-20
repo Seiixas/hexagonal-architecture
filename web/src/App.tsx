@@ -1,9 +1,7 @@
-import { useState } from "react";
+import { SignIn } from "./pages/signin/SignIn";
 
 function App() {
-  const [count, setCount] = useState(0);
-
-  return <>asd</>;
+  return <SignIn />;
 }
 
 export default App;
